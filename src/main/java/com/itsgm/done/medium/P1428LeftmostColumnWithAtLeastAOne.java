@@ -1,4 +1,4 @@
-package com.itsgm.inprogress.medium;
+package com.itsgm.done.medium;
 
 import java.util.ArrayList;
 import java.util.List;

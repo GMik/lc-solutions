@@ -1,4 +1,4 @@
-package com.itsgm.inprogress.medium;
+package com.itsgm.done.medium;
 
 import java.util.List;
 
@@ -39,5 +39,5 @@ public class P1428LeftmostColumnWithAtLeastAOne_fast {
             return c != columns ? c : -1;
         }
 
-
     }
+}
