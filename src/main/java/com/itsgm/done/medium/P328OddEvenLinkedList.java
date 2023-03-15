@@ -46,9 +46,9 @@ public class P328OddEvenLinkedList {
                 curr = curr.next;
             }
 
+            //to avoid cycle
             oddCurr.next = null;
             evenCurr.next = null;
-
 
             oddCurr.next = evenHead.next;
             return oddHead.next;
