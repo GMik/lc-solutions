@@ -45,11 +45,11 @@ public class P126WordLadderII_bfs {
                 }
 
 
-                for (int i = 0; i < wordList.size(); i++) {
-                    if (!positions.contains(i)) {
-                        queue.add(copyWithElement(positions, i));
-                    }
-                }
+//                for (int i = 0; i < wordList.size(); i++) {
+//                    if (!positions.contains(i)) {
+//                        queue.add(copyWithElement(positions, i));
+//                    }
+//                }
 
 
             }
