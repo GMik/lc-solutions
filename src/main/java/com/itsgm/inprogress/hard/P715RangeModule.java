@@ -6,7 +6,19 @@ import java.util.TreeMap;
 
 public class P715RangeModule {
 
-    class RangeModule {
+    public static void main(String[] args) {
+        RangeModule rangeModule = new RangeModule();
+
+        rangeModule.addRange(10, 20);
+        rangeModule.removeRange(14, 16);
+        rangeModule.queryRange(10, 14);
+        rangeModule.queryRange(13, 15);
+        rangeModule.queryRange(14, 17);
+
+    }
+
+
+    static class RangeModule {
 
         private TreeMap<Integer, Integer> intervals = new TreeMap<>();
 
@@ -85,6 +97,11 @@ public class P715RangeModule {
 
             // it means, that lower entry starts interval including left-end. Then it means, that
             if (lowerLeft != null && lowerLeft.getValue() > left) {
+
+                if (lowerLeft.getValue() < right) {
+                    return false;
+                }
+
                 return lowerLeft.getValue() <= right;
             }
 
@@ -92,25 +109,29 @@ public class P715RangeModule {
             return maybeRight != null && maybeRight <= right;
         }
 
-        public void removeRange(int left, int right) {
-            Map.Entry<Integer, Integer> lowerLeft = intervals.lowerEntry(left);
-            if (lowerLeft.getValue() >= left) {
+        public void removeRange(int removeLeft, int removeRight) {
 
-                //todo continue here
-//                if()
+            // lower left = [10, 20]
+            Map.Entry<Integer, Integer> beforeRemoveLeft = intervals.lowerEntry(removeLeft);
 
-                intervals.put(lowerLeft.getKey(), left);
-            } else {
+            if (beforeRemoveLeft != null && beforeRemoveLeft.getValue() > removeLeft) {
+
+                intervals.remove(beforeRemoveLeft.getKey());
+                intervals.put(beforeRemoveLeft.getKey(), removeLeft);
+
+                if (removeRight < beforeRemoveLeft.getValue()) {
+                    intervals.put(removeRight, beforeRemoveLeft.getValue());
+                }
 
             }
 
-            NavigableMap<Integer, Integer> fromLeftToRightExclusive = intervals.subMap(left, false, right, false);
-            fromLeftToRightExclusive.forEach((k, v) -> {
-                if (v <= right) {
-                    intervals.remove(k);
+            NavigableMap<Integer, Integer> startingBetweenRemoveLefAndRight = intervals.subMap(removeLeft, true, removeRight, false);
+            startingBetweenRemoveLefAndRight.forEach((lx, rx) -> {
+                if (rx <= removeRight) {
+                    intervals.remove(lx);
                 } else {
-                    intervals.remove(k);
-                    intervals.put(right, v);
+                    intervals.remove(lx);
+                    intervals.put(removeRight, rx);
                 }
             });
         }
